@@ -1,9 +1,15 @@
 $ErrorActionPreference = "Stop"
 
+try {
+  [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+} catch {
+  Write-Verbose "Unable to force TLS 1.2; continuing with existing security protocol settings."
+}
+
 $ZipUrl = if ($env:CODEXAUTH_ZIP_URL) {
   $env:CODEXAUTH_ZIP_URL
 } else {
-  "https://github.com/thsangyk-oss/codexauth/archive/refs/heads/main.zip"
+  "https://codeload.github.com/thsangyk-oss/codexauth/zip/refs/heads/main"
 }
 
 $InstallRoot = if ($env:CODEXAUTH_INSTALL_DIR) {
