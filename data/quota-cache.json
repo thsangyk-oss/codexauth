@@ -1,0 +1,878 @@
+{
+  "62400bf8-e348-4938-a2c4-2c8cd2576672": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "team",
+      "limitReached": false,
+      "session": {
+        "used": 8,
+        "remaining": 92,
+        "resetAt": "2026-04-27T10:48:18.000Z"
+      },
+      "weekly": {
+        "used": 59,
+        "remaining": 41,
+        "resetAt": "2026-04-29T05:12:48.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-19T11:49:04.000Z",
+      "renewsAt": "2026-05-19T05:49:04.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Palaze",
+      "checkedAt": "2026-04-27T07:27:55.547Z",
+      "source": "accounts/check"
+    },
+    "email": "juanrenaudfnto@palaze.cc",
+    "checkedAt": "2026-04-27T07:27:56.996Z"
+  },
+  "435e54dd-ce78-4d36-981e-576092be8cba": {
+    "token": {
+      "status": "error",
+      "code": 402,
+      "detail": {
+        "code": "deactivated_workspace"
+      }
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 402
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-27T22:32:12.000Z",
+      "renewsAt": "2026-05-27T16:32:12.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Salakoais",
+      "checkedAt": "2026-04-30T17:25:26.418Z",
+      "source": "accounts/check"
+    },
+    "email": "bvxuyenatayninh@gmail.com",
+    "checkedAt": "2026-05-03T23:54:01.810Z"
+  },
+  "f204bf63-fc2c-408e-a214-0b7f84cde354": {
+    "token": {
+      "status": "error",
+      "code": 402,
+      "detail": {
+        "code": "deactivated_workspace"
+      }
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 402
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-27T22:32:12.000Z",
+      "renewsAt": "2026-05-27T16:32:12.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Salakoais",
+      "checkedAt": "2026-04-30T17:25:26.418Z",
+      "source": "accounts/check"
+    },
+    "email": "nilushukaniluseka@gmail.com",
+    "checkedAt": "2026-05-03T23:54:01.810Z"
+  },
+  "20c48443-5b0f-40e1-870f-20ecb6297159": {
+    "token": {
+      "status": "error",
+      "code": 402,
+      "detail": {
+        "code": "deactivated_workspace"
+      }
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 402
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-27T22:32:12.000Z",
+      "renewsAt": "2026-05-27T16:32:12.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Salakoais",
+      "checkedAt": "2026-04-30T17:25:26.418Z",
+      "source": "accounts/check"
+    },
+    "email": "thanhsangtdn@gmail.com",
+    "checkedAt": "2026-05-03T23:54:01.810Z"
+  },
+  "090e73b2-5904-4533-b031-5051ccb79f58": {
+    "token": {
+      "status": "error",
+      "code": 402,
+      "detail": {
+        "code": "deactivated_workspace"
+      }
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 402
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-27T22:32:12.000Z",
+      "renewsAt": "2026-05-27T16:32:12.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Salakoais",
+      "checkedAt": "2026-04-30T17:25:26.418Z",
+      "source": "accounts/check"
+    },
+    "email": "cefalukaylia@gmail.com",
+    "checkedAt": "2026-05-03T23:54:01.810Z"
+  },
+  "79ae68d3-acdc-4cb1-b95a-e4efb25da8e0": {
+    "token": {
+      "status": "error",
+      "code": 402,
+      "detail": {
+        "code": "deactivated_workspace"
+      }
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 402
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-27T08:42:08.000Z",
+      "renewsAt": "2026-05-27T02:42:08.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Huynhlx",
+      "checkedAt": "2026-04-30T17:25:25.601Z",
+      "source": "accounts/check"
+    },
+    "email": "thanhsang7.vhz@gmail.com",
+    "checkedAt": "2026-05-03T23:54:01.810Z"
+  },
+  "3629bcb3-ef37-4792-a912-414233105dc1": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-05-16T00:38:35.000Z",
+      "renewsAt": "2026-05-14T23:38:35.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": false,
+      "workspaceName": null,
+      "checkedAt": "2026-05-05T08:37:52.349Z",
+      "source": "accounts/check"
+    },
+    "email": "bsthsang@gmail.com",
+    "checkedAt": "2026-05-07T01:30:51.423Z"
+  },
+  "2c72db69-188e-47aa-baa3-300d66f886f5": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-27T08:42:08.000Z",
+      "renewsAt": "2026-05-27T02:42:08.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Huynhlx",
+      "checkedAt": "2026-04-30T17:25:25.601Z",
+      "source": "accounts/check"
+    },
+    "email": "sylviahoffma@huynhlx.shop",
+    "checkedAt": "2026-05-03T23:54:01.810Z"
+  },
+  "09340d57-cf6e-42e0-9c8e-9f15cc6a439a": {
+    "token": {
+      "status": "error",
+      "code": 402,
+      "detail": {
+        "code": "deactivated_workspace"
+      }
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 402
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-27T08:42:08.000Z",
+      "renewsAt": "2026-05-27T02:42:08.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Huynhlx",
+      "checkedAt": "2026-04-30T17:25:25.601Z",
+      "source": "accounts/check"
+    },
+    "email": "sangpremiums@gmail.com",
+    "checkedAt": "2026-05-03T23:54:01.810Z"
+  },
+  "03ca1698-7958-4f7d-a389-f33b8ba0c43c": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "team",
+      "subscriptionPlan": "chatgptteamplan",
+      "expiresAt": "2026-05-27T22:32:12.000Z",
+      "renewsAt": "2026-05-27T16:32:12.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": "Salakoais",
+      "checkedAt": "2026-04-30T17:25:26.418Z",
+      "source": "accounts/check"
+    },
+    "email": "emilypagniniahs@salakoais.shop",
+    "checkedAt": "2026-05-03T23:54:01.810Z"
+  },
+  "68c44861-946a-4a7c-a77d-e5de5e7763d9": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": false,
+      "session": {
+        "used": 47,
+        "remaining": 53,
+        "resetAt": "2026-05-11T07:07:03.000Z"
+      },
+      "weekly": {
+        "used": 5,
+        "remaining": 95,
+        "resetAt": "2026-05-18T02:44:14.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-03T23:44:07.000Z",
+      "renewsAt": "2026-06-03T17:44:07.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T04:21:16.008Z",
+      "source": "accounts/check"
+    },
+    "email": "nguyenduy76@apptool.indevs.in",
+    "checkedAt": "2026-05-11T04:21:22.034Z"
+  },
+  "333a1bbe-7fd2-4f65-946d-08d4dd4852cc": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-03T23:45:35.000Z",
+      "renewsAt": "2026-06-03T17:45:35.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-05T04:20:01.275Z",
+      "source": "accounts/check"
+    },
+    "email": "namminh68@apptool.indevs.in",
+    "checkedAt": "2026-05-07T01:30:51.423Z"
+  },
+  "1fd18422-f733-43d2-8729-e6424ec40c0d": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-03T23:47:59.000Z",
+      "renewsAt": "2026-06-03T17:47:59.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-05T04:20:00.918Z",
+      "source": "accounts/check"
+    },
+    "email": "phamminh24@oneon.site",
+    "checkedAt": "2026-05-07T01:30:51.423Z"
+  },
+  "a6401804-4ff1-4948-8656-577ce9a4fb6e": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-05T07:29:39.000Z",
+      "renewsAt": "2026-06-05T01:29:39.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-06T02:12:03.806Z",
+      "source": "accounts/check"
+    },
+    "email": "dovebabie5@hotmail.com",
+    "checkedAt": "2026-05-07T01:30:51.423Z"
+  },
+  "75ef9757-80b9-4e81-be64-0c1c63e7351c": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-05T07:43:59.000Z",
+      "renewsAt": "2026-06-05T01:43:59.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-06T02:12:03.175Z",
+      "source": "accounts/check"
+    },
+    "email": "shark66408@hotmail.com",
+    "checkedAt": "2026-05-07T01:30:51.423Z"
+  },
+  "28fe0507-79c2-4385-802c-1a7ea3970f7c": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "free",
+      "subscriptionPlan": "chatgptfreeplan",
+      "expiresAt": null,
+      "renewsAt": null,
+      "cancelsAt": null,
+      "billingPeriod": null,
+      "hasActiveSubscription": false,
+      "willRenew": false,
+      "workspaceName": null,
+      "checkedAt": "2026-05-07T04:17:45.171Z",
+      "source": "accounts/check"
+    },
+    "email": "j3lmdglvlzuppgm@piggyai.online",
+    "checkedAt": "2026-05-09T12:02:04.954Z"
+  },
+  "ea5c1d60-9cd4-49bb-a899-ebc44c7d1d91": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-07T08:51:52.000Z",
+      "renewsAt": "2026-06-07T02:51:52.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-07T04:17:45.708Z",
+      "source": "accounts/check"
+    },
+    "email": "4kgk4estmqrsnom@piggyai.online",
+    "checkedAt": "2026-05-09T12:02:04.954Z"
+  },
+  "1cca0a6f-50c2-4a55-be85-44d923e468d5": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-07T11:14:50.000Z",
+      "renewsAt": "2026-06-07T05:14:50.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-09T13:49:30.748Z",
+      "source": "accounts/check"
+    },
+    "email": "6osjjir3sypm6bn@shopbanvaythiaecuokdi.site",
+    "checkedAt": "2026-05-11T02:58:38.316Z"
+  },
+  "1352eb7f-79fe-4581-8c26-a471f002d500": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-09T16:57:43.000Z",
+      "renewsAt": "2026-06-09T10:57:43.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-09T16:19:16.024Z",
+      "source": "accounts/check"
+    },
+    "email": "signaigohenri501@hotmail.com",
+    "checkedAt": "2026-05-11T02:58:38.316Z"
+  },
+  "b35180ac-dda2-4308-b456-eccc7c71b8df": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-09T16:57:13.000Z",
+      "renewsAt": "2026-06-09T10:57:13.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-09T16:19:16.106Z",
+      "source": "accounts/check"
+    },
+    "email": "cammysahagun44@hotmail.com",
+    "checkedAt": "2026-05-11T02:58:38.316Z"
+  },
+  "fb0334f7-ab43-436f-9617-de0eeee697f7": {
+    "token": {
+      "status": "error",
+      "code": 401,
+      "detail": "Token hết hạn hoặc bị thu hồi"
+    },
+    "usage": {
+      "available": false,
+      "httpCode": 401
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-09T16:58:24.000Z",
+      "renewsAt": "2026-06-09T10:58:24.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-09T16:19:16.241Z",
+      "source": "accounts/check"
+    },
+    "email": "attendantgitto33@hotmail.com",
+    "checkedAt": "2026-05-11T02:58:38.316Z"
+  },
+  "153ecfab-361f-4c44-9aad-1016e43c65b6": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": false,
+      "session": {
+        "used": 25,
+        "remaining": 75,
+        "resetAt": "2026-05-11T07:06:25.000Z"
+      },
+      "weekly": {
+        "used": 4,
+        "remaining": 96,
+        "resetAt": "2026-05-18T02:06:25.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-10T22:13:39.000Z",
+      "renewsAt": "2026-06-10T16:13:39.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T03:46:00.996Z",
+      "source": "accounts/check"
+    },
+    "email": "chapauenasamleejammn@hotmail.com",
+    "checkedAt": "2026-05-11T03:46:00.998Z"
+  },
+  "fce5b270-5a45-4723-a234-f9ad96b6ea2a": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": false,
+      "session": {
+        "used": 27,
+        "remaining": 73,
+        "resetAt": "2026-05-11T07:06:25.000Z"
+      },
+      "weekly": {
+        "used": 4,
+        "remaining": 96,
+        "resetAt": "2026-05-18T02:06:25.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-10T22:13:39.000Z",
+      "renewsAt": "2026-06-10T16:13:39.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T03:57:24.040Z",
+      "source": "accounts/check"
+    },
+    "email": "chapauenasamleejammn@hotmail.com",
+    "checkedAt": "2026-05-11T03:57:24.041Z"
+  },
+  "0fc1cf4d-193f-4616-9248-fc4683c5ed77": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": false,
+      "session": {
+        "used": 31,
+        "remaining": 69,
+        "resetAt": "2026-05-11T07:06:25.000Z"
+      },
+      "weekly": {
+        "used": 5,
+        "remaining": 95,
+        "resetAt": "2026-05-18T02:06:25.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-10T22:13:39.000Z",
+      "renewsAt": "2026-06-10T16:13:39.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T04:13:27.561Z",
+      "source": "accounts/check"
+    },
+    "email": "chapauenasamleejammn@hotmail.com",
+    "checkedAt": "2026-05-11T04:13:27.563Z"
+  },
+  "2b877f59-7b04-4ee6-97bc-096a7d50a1ce": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": false,
+      "session": {
+        "used": 1,
+        "remaining": 99,
+        "resetAt": "2026-05-11T12:07:31.000Z"
+      },
+      "weekly": {
+        "used": 5,
+        "remaining": 95,
+        "resetAt": "2026-05-18T02:06:25.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-10T22:13:39.000Z",
+      "renewsAt": "2026-06-10T16:13:39.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T07:07:35.289Z",
+      "source": "accounts/check"
+    },
+    "email": "chapauenasamleejammn@hotmail.com",
+    "checkedAt": "2026-05-11T07:07:40.864Z"
+  },
+  "b5fba8b2-c683-4307-97ff-e80b45f2505e": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": false,
+      "session": {
+        "used": 1,
+        "remaining": 99,
+        "resetAt": "2026-05-11T12:07:32.000Z"
+      },
+      "weekly": {
+        "used": 0,
+        "remaining": 100,
+        "resetAt": "2026-05-18T07:07:32.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-10T22:15:01.000Z",
+      "renewsAt": "2026-06-10T16:15:01.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T07:07:35.748Z",
+      "source": "accounts/check"
+    },
+    "email": "sonmicarbenenjonbo@hotmail.com",
+    "checkedAt": "2026-05-11T07:07:40.864Z"
+  },
+  "6d937b43-684c-40bf-ba0b-d62c6c36114d": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": true,
+      "session": {
+        "used": 100,
+        "remaining": 0,
+        "resetAt": "2026-05-11T09:52:09.000Z"
+      },
+      "weekly": {
+        "used": 16,
+        "remaining": 84,
+        "resetAt": "2026-05-18T04:52:09.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-10T22:15:32.000Z",
+      "renewsAt": "2026-06-10T16:15:32.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T07:07:33.933Z",
+      "source": "accounts/check"
+    },
+    "email": "tayeljamnkirwilqc@hotmail.com",
+    "checkedAt": "2026-05-11T07:07:40.864Z"
+  },
+  "da9f1c33-6eef-48ff-991b-cc0278d5ae12": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": false,
+      "session": {
+        "used": 1,
+        "remaining": 99,
+        "resetAt": "2026-05-11T12:07:31.000Z"
+      },
+      "weekly": {
+        "used": 0,
+        "remaining": 100,
+        "resetAt": "2026-05-18T07:07:31.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-10T22:17:07.000Z",
+      "renewsAt": "2026-06-10T16:17:07.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T07:07:35.674Z",
+      "source": "accounts/check"
+    },
+    "email": "tonjamwpauelharxs@hotmail.com",
+    "checkedAt": "2026-05-11T07:07:40.864Z"
+  },
+  "087fe374-bec6-4bb5-af83-2dec58651d29": {
+    "token": {
+      "status": "ok",
+      "code": 400,
+      "detail": "Instructions are required"
+    },
+    "usage": {
+      "available": true,
+      "plan": "plus",
+      "limitReached": false,
+      "session": {
+        "used": 1,
+        "remaining": 99,
+        "resetAt": "2026-05-11T12:07:32.000Z"
+      },
+      "weekly": {
+        "used": 0,
+        "remaining": 100,
+        "resetAt": "2026-05-18T07:07:32.000Z"
+      }
+    },
+    "subscription": {
+      "plan": "plus",
+      "subscriptionPlan": "chatgptplusplan",
+      "expiresAt": "2026-06-10T22:17:42.000Z",
+      "renewsAt": "2026-06-10T16:17:42.000Z",
+      "cancelsAt": null,
+      "billingPeriod": "monthly",
+      "hasActiveSubscription": true,
+      "willRenew": true,
+      "workspaceName": null,
+      "checkedAt": "2026-05-11T07:07:40.863Z",
+      "source": "accounts/check"
+    },
+    "email": "tonwilhwiljamjonpp@hotmail.com",
+    "checkedAt": "2026-05-11T07:07:40.864Z"
+  }
+}

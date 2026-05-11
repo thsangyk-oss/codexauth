@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>codexauth</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --surface: #ffffff;
+      --surface-raised: #ffffff;
+      --border: rgba(0,0,0,.08);
+      --border-strong: rgba(0,0,0,.14);
+      --text: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --accent-text: #ffffff;
+      --success: #34c759;
+      --danger: #ff3b30;
+      --warning: #ff9500;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.06);
+      --shadow: 0 4px 16px rgba(0,0,0,.06), 0 1px 4px rgba(0,0,0,.04);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.05);
+      --radius-sm: 8px;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { height: 100%; overflow-x: hidden; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    input, select, textarea, button { font: inherit; color: inherit; }
+
+    /* ── Layout ── */
+    .shell { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .hidden { display: none !important; }
+
+    /* ── Tab pane ── */
+    .tab-pane { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── Lock screen overlay ── */
+    .lock-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      display: grid; place-items: center; padding: 20px;
+      background: rgba(0,0,0,.35); backdrop-filter: blur(8px);
+    }
+    .lock-card {
+      width: min(380px, 100%); padding: 28px 26px;
+      background: var(--surface-raised); box-shadow: var(--shadow-lg);
+      display: flex; flex-direction: column;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 150ms ease;
+    }
+    .card:hover { box-shadow: var(--shadow); }
+
+    /* ── Buttons ── */
+    button {
+      border: 0; cursor: pointer; border-radius: 8px;
+      padding: 8px 16px; font-size: 13px; font-weight: 500;
+      letter-spacing: -.01em;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      min-width: 0; text-align: center; line-height: 1.35;
+    }
+    button:active { transform: scale(.97); }
+    button:disabled { cursor: not-allowed; opacity: .55; transform: none; }
+
+    .btn-primary {
+      background: var(--accent); color: var(--accent-text);
+      box-shadow: 0 1px 2px rgba(0,113,227,.3);
+    }
+    .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 2px 6px rgba(0,113,227,.35); }
+
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border-strong);
+    }
+    .btn-ghost:hover { background: rgba(0,0,0,.03); }
+
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+    .wide { width: 100%; }
+
+    .icon-btn {
+      width: 32px; height: 32px; padding: 0; border-radius: 50%;
+      background: rgba(0,0,0,.04); border: 0; font-size: 18px;
+      color: var(--text-secondary);
+    }
+    .icon-btn:hover { background: rgba(0,0,0,.08); color: var(--text); }
+
+    /* ── Form fields ── */
+    label.field {
+      display: flex; flex-direction: column; gap: 4px;
+      font-size: 13px; color: var(--text-secondary); font-weight: 500;
+    }
+    label.field > input, label.field > select, label.field > textarea {
+      padding: 8px 12px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      background: var(--surface); color: var(--text); font-size: 14px;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+    label.field > input:focus, label.field > select:focus, label.field > textarea:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0,113,227,.12);
+    }
+    textarea { min-height: 72px; resize: vertical; }
+
+    /* ── Text ── */
+    .muted { color: var(--text-secondary); }
+    .caption {
+      display: block; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--text-secondary); margin-bottom: 4px;
+    }
+
+    /* ── Topbar ── */
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px;
+    }
+    .topbar-left { min-width: 0; }
+    .topbar-left h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -.03em; }
+    .topbar-tagline { font-size: 13px; margin-top: 2px; display: block; }
+    .topbar-right { display: flex; align-items: center; gap: 10px; min-width: 0; }
+
+    .status-pill {
+      padding: 5px 12px; border-radius: 999px;
+      background: rgba(0,0,0,.04); border: 1px solid var(--border);
+      font-size: 12px; font-weight: 500; color: var(--text-secondary);
+      white-space: nowrap; max-width: 220px; overflow: hidden; text-overflow: ellipsis;
+    }
+    .status-pill.active {
+      background: rgba(52,199,89,.1); color: #0a7f2e; border-color: rgba(52,199,89,.2);
+    }
+
+    /* ── Workspace ── */
+    .workspace { display: grid; grid-template-columns: minmax(0,1fr) 280px; gap: 16px; }
+    .main-stack { display: flex; flex-direction: column; gap: 12px; }
+    .side-stack { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── Tabs ── */
+    .tabs { display: flex; gap: 2px; padding: 4px; flex-wrap: wrap; }
+    .tab-button {
+      padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 500;
+      background: transparent; border: 0; color: var(--text-secondary);
+      transition: color 150ms ease, background 150ms ease;
+    }
+    .tab-button:hover { background: rgba(0,0,0,.03); color: var(--text); }
+    .tab-button.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; gap: 12px;
+    }
+    .toolbar h2 { margin: 0; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+    .toolbar > div:first-child { min-width: 0; }
+    .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+    /* ── Provider / Account list ── */
+    .provider-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .provider-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 8px 12px; box-shadow: var(--shadow-sm);
+      transition: box-shadow 150ms ease;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      column-gap: 12px; row-gap: 5px;
+      align-items: center; min-width: 0;
+    }
+    .provider-card:hover { box-shadow: var(--shadow); }
+    .provider-card.is-current {
+      border-color: rgba(0,113,227,.4); background: rgba(0,113,227,.05);
+    }
+    .provider-card.is-checking { opacity: .55; pointer-events: none; }
+
+    .priority {
+      min-width: 22px; height: 18px; border-radius: 4px; padding: 0 5px;
+      background: rgba(0,113,227,.08); color: var(--accent);
+      font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 600;
+      display: inline-grid; place-items: center; flex-shrink: 0;
+    }
+
+    /* Row 1 — inline text: priority, name, status, expiry */
+    .acc-line {
+      grid-column: 1; grid-row: 1; min-width: 0;
+      display: flex; align-items: center; gap: 7px;
+      white-space: nowrap; overflow: hidden;
+      font-size: 13px; line-height: 1.3;
+    }
+    .acc-name {
+      font-weight: 600; letter-spacing: -.01em; color: var(--text);
+      flex-shrink: 1; min-width: 0;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .acc-name.current { color: var(--accent); }
+    .acc-line .dot { color: var(--text-secondary); opacity: .35; flex-shrink: 0; }
+    .m-tag { font-size: 12px; font-weight: 500; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+    .m-tag.good  { color: #0a7f2e; }
+    .m-tag.warn  { color: #a05e00; }
+    .m-tag.bad   { color: #c41e14; }
+    .m-tag.plan  { color: var(--accent); }
+    .m-tag.muted { color: var(--text-secondary); }
+    .m-tag.live  { color: #0a7f2e; font-weight: 600; }
+
+    /* Row 2 — quota badges */
+    .acc-badges {
+      grid-column: 1; grid-row: 2; min-width: 0;
+      display: flex; flex-wrap: wrap; gap: 4px;
+    }
+    .acc-badges:empty { display: none; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 2px 6px; border-radius: 5px; font-size: 11px; font-weight: 600;
+      background: rgba(0,0,0,.04); color: var(--text-secondary);
+      border: 1px solid transparent; white-space: nowrap;
+      line-height: 1.4;
+    }
+    .badge.on   { background: rgba(52,199,89,.1);  color: #0a7f2e; border-color: rgba(52,199,89,.15); }
+    .badge.off  { background: rgba(255,59,48,.08); color: #c41e14; border-color: rgba(255,59,48,.12); }
+    .badge.blue { background: rgba(0,113,227,.1);  color: var(--accent); border-color: rgba(0,113,227,.16); }
+    .badge.warn { background: rgba(255,149,0,.1);  color: #a05e00; border-color: rgba(255,149,0,.16); }
+
+    /* ── Inline error/lock note (only when needed) ── */
+    .acc-note {
+      font-size: 11px; color: var(--warning);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 200px; flex-shrink: 1;
+    }
+    .acc-note.lock { color: var(--danger); }
+
+    /* ── Provider actions ── col 2 spanning both rows */
+    .provider-actions {
+      grid-column: 2; grid-row: 1 / 3;
+      display: flex; gap: 6px; flex-shrink: 0;
+      align-self: center;
+    }
+    .provider-actions button {
+      padding: 0; font-size: 14px; border-radius: 6px;
+      width: 32px; height: 32px;
+    }
+
+    /* ── Side cards ── */
+    .side-card { padding: 16px; }
+    .side-card h3 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
+
+    .service-status { display: flex; flex-direction: column; gap: 8px; }
+
+    .status-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 12px; border-radius: 8px;
+      background: #f5f6f8; border: 1px solid var(--border);
+      font-size: 13px; gap: 12px;
+    }
+    .status-row strong {
+      font-weight: 600; font-size: 12px; overflow-wrap: anywhere; text-align: right;
+    }
+    .status-row > * { min-width: 0; }
+
+    .activity-log {
+      margin: 0; padding: 10px; border-radius: 8px;
+      background: #f5f6f8; border: 1px solid var(--border);
+      min-height: 80px; max-height: 220px; overflow: auto;
+      font-family: "IBM Plex Mono", monospace; font-size: 11px; line-height: 1.5;
+      color: var(--text-secondary); white-space: pre-wrap;
+      overflow-wrap: anywhere; word-break: break-word;
+    }
+
+    /* ── Footer note ── */
+    .footer-note { font-size: 12px; margin: 0; padding: 4px 2px; }
+
+    .install-footer {
+      margin-top: 16px; padding: 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .install-footer h3 {
+      margin: 0 0 6px; font-size: 14px; font-weight: 600;
+    }
+    .install-command {
+      margin: 0; padding: 10px 12px; border-radius: 8px;
+      background: #f5f6f8; border: 1px solid var(--border);
+      font-family: "IBM Plex Mono", monospace; font-size: 12px;
+      color: var(--text); overflow-x: auto; white-space: nowrap;
+      max-width: min(100%, 720px);
+    }
+    .install-footer-actions {
+      display: flex; gap: 8px; align-items: center; flex-shrink: 0;
+    }
+
+    /* ── Modal (dialog) ── */
+    .modal-sheet {
+      width: min(560px, calc(100vw - 40px));
+      border: 0; border-radius: var(--radius-xl); padding: 0;
+      background: var(--surface-raised); color: var(--text);
+      box-shadow: var(--shadow-lg); overflow: hidden;
+    }
+    .modal-sheet::backdrop { background: rgba(0,0,0,.25); backdrop-filter: blur(6px); }
+
+    .modal-form { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 4px;
+    }
+    .modal-header > div { min-width: 0; }
+    .modal-header h2 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -.02em; }
+
+    .modal-actions {
+      display: flex; justify-content: flex-end; gap: 8px; padding-top: 4px; flex-wrap: wrap;
+    }
+
+    /* ── Toast banner ── */
+    #banner {
+      position: fixed; top: 20px; left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      z-index: 9999;
+      background: var(--surface-raised);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      padding: 10px 18px; font-size: 14px; font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      display: flex; align-items: center; gap: 8px;
+      max-width: calc(100vw - 40px); white-space: nowrap; overflow: hidden;
+      opacity: 0; pointer-events: none;
+      transition: opacity .2s, transform .28s cubic-bezier(.34,1.2,.64,1);
+    }
+    #banner.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── Empty & spinner ── */
+    .empty-state { text-align: center; padding: 32px 20px; color: var(--text-secondary); }
+    .empty-state .ico { font-size: 32px; margin-bottom: 8px; }
+    .empty-state .msg { font-size: 15px; font-weight: 500; color: var(--text); }
+    .empty-state .sub { font-size: 13px; margin-top: 4px; }
+
+    .spinner {
+      width: 16px; height: 16px; flex-shrink: 0;
+      border: 2px solid rgba(0,0,0,.1); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin .75s linear infinite; display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Quota Summary Panel ── */
+    .quota-summary {
+      display: flex; align-items: center; gap: 0;
+      padding: 0; overflow: hidden;
+    }
+    .quota-summary.hidden { display: none !important; }
+    .qs-item {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1; padding: 10px 8px; gap: 1px;
+      border-right: 1px solid var(--border);
+    }
+    .qs-item:last-of-type { border-right: none; }
+    .qs-val {
+      font-size: 20px; font-weight: 700; line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+    .qs-lbl { font-size: 11px; color: var(--text-secondary); font-weight: 500; letter-spacing: .01em; }
+    .qs-item.ok   .qs-val { color: var(--success); }
+    .qs-item.danger .qs-val { color: var(--danger); }
+    .qs-item.warn .qs-val { color: var(--warning); }
+    .qs-sep { width: 1px; background: var(--border); align-self: stretch; }
+    .qs-time {
+      padding: 6px 12px; font-size: 12px; color: var(--text-secondary);
+      white-space: nowrap; flex-shrink: 0; letter-spacing: .01em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 880px) {
+      .workspace { grid-template-columns: 1fr; }
+      .side-stack { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .shell { padding: 12px; }
+      .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .topbar-right { width: 100%; flex-wrap: wrap; }
+      .toolbar { flex-direction: column; align-items: stretch; gap: 10px; }
+      .toolbar-actions { width: 100%; justify-content: flex-start; }
+      .toolbar-actions > button { flex: 1 1 calc(50% - 4px); }
+      .side-stack { grid-template-columns: 1fr; }
+      .install-footer { align-items: stretch; }
+      .install-command { width: 100%; }
+      .install-footer-actions { width: 100%; }
+      .install-footer-actions > button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1>codexauth</h1>
+        <span class="topbar-tagline muted">Quản lý tài khoản Codex local-native</span>
+      </div>
+      <div class="topbar-right">
+        <div class="status-pill" id="hero-status">Loading…</div>
+        <button id="refreshNavBtn" class="btn-ghost btn-sm">↺ Refresh</button>
+        <button id="logoutBtn" class="btn-ghost btn-sm hidden" title="Đăng xuất khỏi máy này">⎋ Logout</button>
+      </div>
+    </div>
+
+    <div class="workspace">
+
+      <!-- Main column -->
+      <div class="main-stack">
+        <nav class="tabs card">
+          <button class="tab-button active" data-tab="accounts">⚡ Tài khoản</button>
+          <button class="tab-button" data-tab="password">🔒 Mật khẩu</button>
+        </nav>
+
+        <!-- Pane: Accounts -->
+        <div class="tab-pane" data-pane="accounts">
+
+        <div class="toolbar card">
+          <div>
+            <h2 id="accountsHeader">Tài khoản</h2>
+          </div>
+          <div class="toolbar-actions">
+            <button id="checkAllBtn" class="btn-ghost btn-sm">⚡ Test All</button>
+            <button id="deleteInvalidBtn" class="btn-ghost btn-sm">🧹 Xoá acc lỗi token</button>
+            <button id="exportJsonBtn" class="btn-ghost btn-sm">⭳ Export JSON</button>
+            <button id="refreshAccountsBtn" class="btn-ghost btn-sm">↻ Tải lại DS</button>
+            <button id="addOauthBtn" class="btn-primary btn-sm">+ Add OAuth</button>
+          </div>
+        </div>
+
+        <!-- Quota Summary -->
+        <div id="quotaSummary" class="quota-summary card hidden">
+          <div class="qs-item">
+            <span class="qs-val" id="qs-total">—</span>
+            <span class="qs-lbl">Tổng</span>
+          </div>
+          <div class="qs-item ok">
+            <span class="qs-val" id="qs-ok">—</span>
+            <span class="qs-lbl">Hợp lệ</span>
+          </div>
+          <div class="qs-item danger">
+            <span class="qs-val" id="qs-limit">—</span>
+            <span class="qs-lbl">Hết quota</span>
+          </div>
+          <div class="qs-item warn">
+            <span class="qs-val" id="qs-low">—</span>
+            <span class="qs-lbl">Sắp hết &lt;20%</span>
+          </div>
+          <div class="qs-sep"></div>
+          <span class="qs-time" id="qs-time"></span>
+        </div>
+
+        <div id="accountsList" class="provider-list">
+          <!-- skeleton -->
+          <div class="provider-card">
+            <div class="acc-line">
+              <span class="priority" style="background:rgba(0,0,0,.04)"></span>
+              <span style="height:12px;width:120px;border-radius:3px;background:rgba(0,0,0,.06);display:inline-block"></span>
+              <span style="height:12px;width:80px;border-radius:3px;background:rgba(0,0,0,.04);display:inline-block"></span>
+            </div>
+            <div class="acc-badges">
+              <span style="height:18px;width:60px;border-radius:6px;background:rgba(0,0,0,.04);display:inline-block"></span>
+              <span style="height:18px;width:60px;border-radius:6px;background:rgba(0,0,0,.04);display:inline-block"></span>
+              <span style="height:18px;width:50px;border-radius:6px;background:rgba(0,0,0,.04);display:inline-block"></span>
+            </div>
+          </div>
+          <div class="provider-card">
+            <div class="acc-line">
+              <span class="priority" style="background:rgba(0,0,0,.04)"></span>
+              <span style="height:12px;width:90px;border-radius:3px;background:rgba(0,0,0,.06);display:inline-block"></span>
+              <span style="height:12px;width:70px;border-radius:3px;background:rgba(0,0,0,.04);display:inline-block"></span>
+            </div>
+            <div class="acc-badges">
+              <span style="height:18px;width:55px;border-radius:6px;background:rgba(0,0,0,.04);display:inline-block"></span>
+              <span style="height:18px;width:60px;border-radius:6px;background:rgba(0,0,0,.04);display:inline-block"></span>
+            </div>
+          </div>
+        </div>
+
+        <p id="accountsFooter" class="footer-note muted"></p>
+
+        </div><!-- /pane accounts -->
+
+        <!-- Pane: Password -->
+        <div class="tab-pane hidden" data-pane="password">
+          <section class="card" style="padding:20px">
+            <h2 style="margin:0 0 4px;font-size:17px;font-weight:700">Mật khẩu mở khoá</h2>
+            <p class="muted" style="font-size:13px;margin:0 0 18px">
+              Đặt mật khẩu để bảo vệ dashboard. Mỗi máy chỉ cần nhập <strong>1 lần</strong> — sau đó token được lưu trong trình duyệt.
+            </p>
+
+            <div id="pwdState" style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:13px">
+              <span class="badge" id="pwdStateBadge">…</span>
+              <span class="muted" id="pwdStateMsg"></span>
+            </div>
+
+            <form id="pwdForm" style="display:flex;flex-direction:column;gap:12px;max-width:420px">
+              <label class="field" id="pwdCurrentField" style="display:none">
+                <span>Mật khẩu hiện tại</span>
+                <input type="password" id="pwdCurrent" autocomplete="current-password" />
+              </label>
+              <label class="field">
+                <span>Mật khẩu mới <span class="muted" style="font-weight:400">(tối thiểu 4 ký tự)</span></span>
+                <input type="password" id="pwdNew" autocomplete="new-password" required minlength="4" />
+              </label>
+              <label class="field">
+                <span>Nhập lại mật khẩu mới</span>
+                <input type="password" id="pwdConfirm" autocomplete="new-password" required minlength="4" />
+              </label>
+              <p id="pwdMsg" style="margin:0;font-size:12px;min-height:16px"></p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button type="submit" class="btn-primary" id="pwdSaveBtn">💾 Lưu mật khẩu</button>
+                <button type="button" class="btn-ghost" id="pwdClearBtn" style="display:none">Xoá mật khẩu</button>
+                <button type="button" class="btn-ghost" id="pwdLogoutAllBtn" style="display:none">Đăng xuất các máy khác</button>
+              </div>
+            </form>
+          </section>
+        </div><!-- /pane password -->
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="side-stack">
+
+        <section class="card side-card">
+          <h3>Đang dùng</h3>
+          <div id="heroEmpty" class="hidden" style="font-size:13px;color:var(--text-secondary);padding:2px 0">
+            ⚠️ Chưa apply tài khoản nào
+          </div>
+          <div id="heroMain" class="service-status">
+            <div class="status-row">
+              <span>Email</span>
+              <strong id="heroName" style="font-family:'IBM Plex Mono',monospace;font-size:11px">—</strong>
+            </div>
+          </div>
+          <div id="heroTags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px"></div>
+        </section>
+
+        <section class="card side-card">
+          <h3>Thống kê</h3>
+          <div class="service-status">
+            <div class="status-row">
+              <span>Tổng</span>
+              <strong id="statTotal">—</strong>
+            </div>
+            <div class="status-row">
+              <span>Token OK</span>
+              <strong id="statOk" style="color:var(--success)">—</strong>
+            </div>
+            <div class="status-row">
+              <span>Token lỗi</span>
+              <strong id="statFail" style="color:var(--danger)">—</strong>
+            </div>
+            <div class="status-row">
+              <span>Chưa check</span>
+              <strong id="statUnchecked" style="color:var(--warning)">—</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card side-card">
+          <h3>Activity Log</h3>
+          <pre id="activity-log" class="activity-log">No actions yet.</pre>
+        </section>
+
+      </aside>
+    </div>
+
+    <section class="card install-footer">
+      <div style="min-width:0">
+        <h3>Cài bản Windows</h3>
+        <pre class="install-command" id="windowsInstallCommand">irm https://codexauth.misanet.io.vn/install-from-vps.ps1 | iex</pre>
+      </div>
+      <div class="install-footer-actions">
+        <button type="button" id="copyWindowsInstallBtn" class="btn-ghost btn-sm">Copy lệnh</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lock Screen (covers app until login) -->
+  <div id="lockScreen" class="lock-overlay hidden">
+    <form id="lockForm" class="card lock-card">
+      <div style="font-size:34px;text-align:center">🔒</div>
+      <h2 style="margin:6px 0 4px;font-size:20px;text-align:center">codexauth</h2>
+      <p class="muted" style="margin:0 0 18px;text-align:center;font-size:13px">Nhập mật khẩu để mở khoá dashboard</p>
+      <label class="field">
+        <span>Mật khẩu</span>
+        <input type="password" id="lockInput" autocomplete="current-password" autofocus required />
+      </label>
+      <p id="lockMsg" style="margin:8px 0 0;font-size:12px;color:var(--danger);min-height:16px"></p>
+      <button type="submit" class="btn-primary wide" style="margin-top:14px">Mở khoá</button>
+    </form>
+  </div>
+
+  <!-- OAuth Dialog -->
+  <dialog id="oauth-dialog" class="modal-sheet">
+    <div class="modal-form">
+      <div class="modal-header">
+        <div>
+          <span class="caption">OAuth</span>
+          <h2>Thêm OAuth account</h2>
+        </div>
+        <button type="button" id="close-oauth-dialog" class="icon-btn">×</button>
+      </div>
+
+      <p class="muted" id="oauthStatus" style="font-size:13px;margin:0">
+        codexauth sẽ tự tạo link OAuth, bạn đăng nhập trên browser rồi dán callback URL về đây.
+      </p>
+      <p id="oauthExpiry" style="font-size:12px;color:var(--warning);min-height:16px;margin:0"></p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <button type="button" id="oauthStartBtn" class="btn-ghost btn-sm">Lấy link OAuth</button>
+        <button type="button" id="oauthCopyBtn" class="btn-ghost btn-sm" disabled>Copy link</button>
+        <a id="oauthOpenBtn" href="#" target="_blank" rel="noopener"
+           class="btn-primary btn-sm"
+           style="text-decoration:none;pointer-events:none;opacity:.55">Mở link</a>
+      </div>
+
+      <label class="field">
+        <span>Auth URL</span>
+        <textarea id="oauthAuthUrl" rows="2" readonly
+          placeholder="Auth URL sẽ hiện ở đây"
+          style="font-family:'IBM Plex Mono',monospace;font-size:12px"></textarea>
+      </label>
+
+      <label class="field">
+        <span>Callback URL</span>
+        <textarea id="oauthCallbackInput" rows="3"
+          placeholder="Dán callback URL sau khi login xong, ví dụ http://localhost:1455/auth/callback?code=..."
+          style="font-family:'IBM Plex Mono',monospace;font-size:12px"></textarea>
+      </label>
+
+      <p class="muted" style="font-size:12px;margin:0">
+        Flow này chạy native trong codexauth. Callback localhost hợp lệ nếu đúng state và đúng đường dẫn callback.
+      </p>
+
+      <div class="modal-actions">
+        <button type="button" id="oauthCancelBtn" class="btn-ghost">Đóng</button>
+        <button type="button" id="oauthFinishBtn" class="btn-primary" disabled>Hoàn tất thêm account</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast -->
+  <div id="banner">
+    <span id="bannerIcon">✓</span>
+    <span id="bannerMsg"></span>
+  </div>
+
+  <script>
+    const API = location.origin + '/api';
+    let currentAccountId = null;
+    let currentConnectionId = null;
+    let oauthFlow = null;
+    const quotaCache = new Map();
+    let accountsData = [];
+
+    // ── Auth: device token + fetch wrapper ──
+    const AUTH_TOKEN_KEY = 'cr_auth_token';
+    function getAuthToken() { return localStorage.getItem(AUTH_TOKEN_KEY) || ''; }
+    function setAuthToken(t) {
+      if (t) localStorage.setItem(AUTH_TOKEN_KEY, t);
+      else localStorage.removeItem(AUTH_TOKEN_KEY);
+    }
+
+    const _origFetch = window.fetch.bind(window);
+    window.fetch = function(input, init) {
+      init = init || {};
+      const headers = new Headers(init.headers || {});
+      const t = getAuthToken();
+      if (t) headers.set('x-cr-token', t);
+      init.headers = headers;
+      return _origFetch(input, init).then(res => {
+        // Auto-lock if any /api/* (other than auth) returns 401
+        try {
+          const url = typeof input === 'string' ? input : (input && input.url) || '';
+          if (res.status === 401 && url.includes('/api/') && !url.includes('/api/auth/')) {
+            setAuthToken('');
+            showLockScreen('Phiên hết hạn, hãy nhập lại mật khẩu');
+          }
+        } catch (_) {}
+        return res;
+      });
+    };
+
+    function showLockScreen(msg) {
+      const el = document.getElementById('lockScreen');
+      if (!el) return;
+      el.classList.remove('hidden');
+      const m = document.getElementById('lockMsg');
+      if (m) m.textContent = msg || '';
+      const inp = document.getElementById('lockInput');
+      if (inp) { inp.value = ''; setTimeout(() => inp.focus(), 50); }
+    }
+    function hideLockScreen() {
+      document.getElementById('lockScreen').classList.add('hidden');
+    }
+
+    async function fetchJsonSafe(url, init) {
+      const r = await fetch(url, init);
+      const ct = r.headers.get('content-type') || '';
+      if (!ct.includes('application/json')) {
+        const err = new Error(`Server không trả JSON (HTTP ${r.status}). Cần restart node server để load route auth mới.`);
+        err.notJson = true; err.status = r.status;
+        throw err;
+      }
+      const d = await r.json().catch(() => ({}));
+      return { res: r, data: d };
+    }
+
+    async function bootstrapAuth() {
+      try {
+        const { data: d } = await fetchJsonSafe(`${API}/auth/status`);
+        if (d.hasPassword && !d.authed) {
+          showLockScreen('');
+          return false;
+        }
+        document.getElementById('logoutBtn').classList.toggle('hidden', !d.hasPassword);
+        return true;
+      } catch (e) {
+        // Server chưa update / chưa restart — vẫn cho dashboard chạy như cũ
+        if (e.notJson) console.warn('[auth]', e.message);
+        return true;
+      }
+    }
+
+    document.getElementById('lockForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pwd = document.getElementById('lockInput').value;
+      const msg = document.getElementById('lockMsg');
+      msg.textContent = '';
+      try {
+        const { res: r, data: d } = await fetchJsonSafe(`${API}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pwd }),
+        });
+        if (!r.ok) { msg.textContent = d.detail || d.error || 'Sai mật khẩu'; return; }
+        setAuthToken(d.token);
+        hideLockScreen();
+        document.getElementById('logoutBtn').classList.remove('hidden');
+        Promise.all([loadCurrent(), loadAccounts()]);
+        logActivity('Unlocked');
+      } catch (err) {
+        msg.textContent = err.message || 'Lỗi đăng nhập';
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try { await fetch(`${API}/auth/logout`, { method: 'POST' }); } catch (_) {}
+      setAuthToken('');
+      showLockScreen('Đã đăng xuất');
+    });
+
+    // ── Tab switching ──
+    document.querySelectorAll('.tab-button[data-tab]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        document.querySelectorAll('.tab-button[data-tab]').forEach(b =>
+          b.classList.toggle('active', b === btn));
+        document.querySelectorAll('.tab-pane[data-pane]').forEach(p =>
+          p.classList.toggle('hidden', p.dataset.pane !== target));
+        if (target === 'password') refreshPasswordPane();
+      });
+    });
+
+    // ── Password tab ──
+    async function refreshPasswordPane() {
+      let d = {};
+      try { ({ data: d } = await fetchJsonSafe(`${API}/auth/status`)); }
+      catch (e) {
+        document.getElementById('pwdMsg').style.color = 'var(--danger)';
+        document.getElementById('pwdMsg').textContent = e.message || 'Server chưa hỗ trợ auth — restart node server';
+        return;
+      }
+      const badge = document.getElementById('pwdStateBadge');
+      const stateMsg = document.getElementById('pwdStateMsg');
+      const curField = document.getElementById('pwdCurrentField');
+      const clearBtn = document.getElementById('pwdClearBtn');
+      const logoutAllBtn = document.getElementById('pwdLogoutAllBtn');
+      const saveBtn = document.getElementById('pwdSaveBtn');
+      if (d.hasPassword) {
+        badge.textContent = '🔒 Đã bảo vệ';
+        badge.className = 'badge on';
+        stateMsg.textContent = `Đang có ${d.deviceCount || 0} thiết bị đã mở khoá`;
+        // Only require current password if not authenticated by token
+        curField.style.display = d.authed ? 'none' : '';
+        clearBtn.style.display = '';
+        logoutAllBtn.style.display = d.authed ? '' : 'none';
+        saveBtn.textContent = '💾 Đổi mật khẩu';
+      } else {
+        badge.textContent = '⚠ Chưa đặt';
+        badge.className = 'badge warn';
+        stateMsg.textContent = 'Bất kỳ ai truy cập được URL đều dùng được dashboard';
+        curField.style.display = 'none';
+        clearBtn.style.display = 'none';
+        logoutAllBtn.style.display = 'none';
+        saveBtn.textContent = '💾 Đặt mật khẩu';
+      }
+    }
+
+    document.getElementById('pwdForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const cur = document.getElementById('pwdCurrent').value;
+      const np = document.getElementById('pwdNew').value;
+      const cf = document.getElementById('pwdConfirm').value;
+      const msg = document.getElementById('pwdMsg');
+      msg.style.color = 'var(--danger)';
+      msg.textContent = '';
+      if (np.length < 4) { msg.textContent = 'Mật khẩu cần ≥ 4 ký tự'; return; }
+      if (np !== cf) { msg.textContent = 'Mật khẩu xác nhận không khớp'; return; }
+      try {
+        const r = await fetch(`${API}/auth/set-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentPassword: cur, newPassword: np }),
+        });
+        const d = await r.json();
+        if (!r.ok) { msg.textContent = d.detail || d.error || 'Lỗi'; return; }
+        setAuthToken(d.token);
+        msg.style.color = 'var(--success)';
+        msg.textContent = '✓ Đã lưu mật khẩu';
+        document.getElementById('pwdForm').reset();
+        document.getElementById('logoutBtn').classList.remove('hidden');
+        showBanner('Đã cập nhật mật khẩu', 'ok');
+        logActivity('Password updated');
+        refreshPasswordPane();
+      } catch (err) {
+        msg.textContent = err.message || 'Lỗi';
+      }
+    });
+
+    document.getElementById('pwdClearBtn').addEventListener('click', async () => {
+      const cur = document.getElementById('pwdCurrent').value;
+      const msg = document.getElementById('pwdMsg');
+      msg.style.color = 'var(--danger)';
+      if (!cur) { msg.textContent = 'Cần nhập mật khẩu hiện tại để xoá'; return; }
+      if (!confirm('Xoá mật khẩu? Dashboard sẽ không còn được bảo vệ.')) return;
+      try {
+        const r = await fetch(`${API}/auth/clear-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentPassword: cur }),
+        });
+        const d = await r.json();
+        if (!r.ok) { msg.textContent = d.detail || d.error || 'Lỗi'; return; }
+        setAuthToken('');
+        msg.style.color = 'var(--success)';
+        msg.textContent = '✓ Đã xoá mật khẩu';
+        document.getElementById('pwdForm').reset();
+        document.getElementById('logoutBtn').classList.add('hidden');
+        showBanner('Đã xoá mật khẩu', 'ok');
+        logActivity('Password cleared');
+        refreshPasswordPane();
+      } catch (err) {
+        msg.textContent = err.message || 'Lỗi';
+      }
+    });
+
+    document.getElementById('pwdLogoutAllBtn').addEventListener('click', async () => {
+      if (!confirm('Đăng xuất tất cả các máy khác? Máy này vẫn giữ phiên.')) return;
+      try {
+        await fetch(`${API}/auth/logout-all`, { method: 'POST' });
+        showBanner('Đã đăng xuất các máy khác', 'ok');
+        logActivity('Logged out other devices');
+        refreshPasswordPane();
+      } catch (err) {
+        showBanner(err.message || 'Lỗi', 'error');
+      }
+    });
+
+    // ── Activity log ──
+    const actLog = [];
+    function logActivity(msg) {
+      const t = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      actLog.unshift(`[${t}] ${msg}`);
+      if (actLog.length > 60) actLog.pop();
+      const el = document.getElementById('activity-log');
+      if (el) el.textContent = actLog.join('\n');
+    }
+
+    // ── Utilities ──
+    async function apiJson(path, options = {}) {
+      const res = await fetch(`${API}${path}`, options);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const detail = data.detail
+          ? `${data.error || 'Lỗi'}: ${data.detail}`
+          : (data.error || `HTTP ${res.status}`);
+        throw new Error(detail);
+      }
+      return data;
+    }
+
+    function escHtml(s) {
+      if (s == null) return '';
+      return String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+    }
+
+    async function copyText(value) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(value); return;
+      }
+      const el = document.createElement('textarea');
+      el.value = value; el.setAttribute('readonly', '');
+      el.style.cssText = 'position:absolute;left:-9999px';
+      document.body.appendChild(el); el.select();
+      document.execCommand('copy'); document.body.removeChild(el);
+    }
+
+    function formatDate(iso) {
+      if (!iso) return null;
+      const diff = new Date(iso) - Date.now();
+      if (diff < 0) return 'Đã hết hạn';
+      const d = Math.floor(diff / 86400000);
+      if (d === 0) return 'Hết hạn hôm nay';
+      if (d < 7) return `Còn ${d} ngày`;
+      return new Date(iso).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    function timeAgo(iso) {
+      if (!iso) return '';
+      const s = Math.floor((Date.now() - new Date(iso)) / 1000);
+      if (s < 60) return `${s}s trước`;
+      if (s < 3600) return `${Math.floor(s / 60)}m trước`;
+      return `${Math.floor(s / 3600)}h trước`;
+    }
+
+    function formatTimeLeft(iso) {
+      if (!iso) return null;
+      const ms = new Date(iso) - Date.now();
+      if (ms <= 0) return 'đã reset';
+      const d = Math.floor(ms / 86400000);
+      const h = Math.floor((ms % 86400000) / 3600000);
+      if (d >= 1) return d + 'd' + (h > 0 ? ' ' + h + 'h' : '');
+      const m = Math.floor((ms % 3600000) / 60000);
+      if (h >= 1) return h + 'h' + (m > 0 ? ' ' + m + 'm' : '');
+      return m + 'm';
+    }
+
+    function getSubscriptionDisplay(subscription, fallbackPlan = null) {
+      const expiresAt = subscription && subscription.expiresAt || null;
+      if (expiresAt) {
+        const label = formatDate(expiresAt);
+        const daysMatch = label.match(/(\d+)/);
+        const days = daysMatch ? Number(daysMatch[1]) : null;
+        const cls = label === 'Đã hết hạn' ? 'off'
+          : label === 'Hết hạn hôm nay' ? 'warn'
+          : label.startsWith('Còn') && Number.isFinite(days) && days <= 3 ? 'warn'
+          : 'on';
+        return { label: `★ ${label}`, cls };
+      }
+      const plan = (subscription && subscription.plan) || fallbackPlan || null;
+      if (!plan) return null;
+      return { label: `★ ${plan}`, cls: 'blue' };
+    }
+
+    function getLiveSubscription(acc, fallbackPlan = null) {
+      if (!acc) return fallbackPlan ? { plan: fallbackPlan } : null;
+      const q = quotaCache.get(acc.id);
+      return (q && q.subscription)
+        ? q.subscription
+        : (acc.subscription || (fallbackPlan ? { plan: fallbackPlan } : null));
+    }
+
+    function updateAccountSubscription(accId, subscription) {
+      const idx = accountsData.findIndex(a => a.id === accId);
+      if (idx < 0 || !subscription) return;
+      accountsData[idx] = { ...accountsData[idx], subscription };
+    }
+
+    function removeAccountsFromState(ids) {
+      const deleteIds = new Set((Array.isArray(ids) ? ids : [ids]).filter(Boolean));
+      if (deleteIds.size === 0) return;
+      accountsData = accountsData.filter(acc => !deleteIds.has(acc.id));
+      for (const id of deleteIds) quotaCache.delete(id);
+      if (currentConnectionId && deleteIds.has(currentConnectionId)) currentConnectionId = null;
+      if (currentAccountId) {
+        const stillExists = accountsData.some(acc => acc.accountId === currentAccountId);
+        if (!stillExists) currentAccountId = null;
+      }
+    }
+
+    function getInvalidAccountIdsFromLatestChecks() {
+      return accountsData
+        .filter(acc => {
+          const cached = quotaCache.get(acc.id);
+          return cached && cached.token && cached.token.status !== 'ok';
+        })
+        .map(acc => acc.id);
+    }
+
+    function refreshAccountsView() {
+      const list = document.getElementById('accountsList');
+      document.getElementById('accountsHeader').textContent = `Tài khoản · ${accountsData.length}`;
+      updateStats(accountsData);
+      updateFooter();
+      updateQuotaSummary();
+
+      if (accountsData.length === 0) {
+        list.innerHTML = `<div class="provider-card"><div class="empty-state"><div class="ico">🔍</div><div class="msg">Chưa có tài khoản Codex</div></div></div>`;
+        return;
+      }
+
+      renderAccountRows(accountsData);
+    }
+
+    // ── Stats ──
+    function updateStats(accounts) {
+      let ok = 0, fail = 0, unchecked = 0;
+      for (const a of accounts) {
+        const q = quotaCache.get(a.id);
+        if (q) { if (q.token.status === 'ok') ok++; else fail++; }
+        else { if (a.testStatus === 'active') ok++; else if (a.testStatus === 'error') fail++; else unchecked++; }
+      }
+      document.getElementById('statTotal').textContent = accounts.length;
+      document.getElementById('statOk').textContent = ok;
+      document.getElementById('statFail').textContent = fail;
+      document.getElementById('statUnchecked').textContent = unchecked;
+    }
+
+    // ── Toast ──
+    let _bid;
+    function showBanner(msg, type = 'ok') {
+      const el = document.getElementById('banner');
+      const ico = document.getElementById('bannerIcon');
+      document.getElementById('bannerMsg').textContent = msg;
+      ico.textContent = type === 'ok' ? '✓' : '✕';
+      ico.style.color = type === 'ok' ? 'var(--success)' : 'var(--danger)';
+      el.classList.add('show');
+      clearTimeout(_bid);
+      _bid = setTimeout(() => el.classList.remove('show'), 3500);
+    }
+
+    // ── Current account ──
+    async function loadCurrent() {
+      try {
+        const d = await fetch(`${API}/current`).then(r => r.json());
+        currentAccountId = d.account_id;
+        currentConnectionId = d.currentConnectionId || currentConnectionId;
+
+        const heroStatus = document.getElementById('hero-status');
+        const heroEmpty  = document.getElementById('heroEmpty');
+        const heroMain   = document.getElementById('heroMain');
+        const heroTags   = document.getElementById('heroTags');
+
+        if (!d.account_id) {
+          heroEmpty.classList.remove('hidden');
+          heroMain.style.display = 'none';
+          heroTags.innerHTML = '';
+          heroStatus.textContent = 'No account';
+          heroStatus.className = 'status-pill';
+          return;
+        }
+
+        heroEmpty.classList.add('hidden');
+        heroMain.style.display = '';
+        document.getElementById('heroName').textContent = d.email || '—';
+        heroStatus.textContent = d.email || 'Active';
+        heroStatus.className = 'status-pill active';
+
+        const tags = [];
+        const curAcc = accountsData.find(a => a.id === currentConnectionId);
+        const sub = getSubscriptionDisplay(
+          getLiveSubscription(curAcc, d.plan_type) || d.subscription,
+          d.plan_type
+        );
+        if (sub) tags.push(`<span class="badge ${sub.cls}">${escHtml(sub.label)}</span>`);
+
+        if (curAcc) {
+          const q = quotaCache.get(curAcc.id);
+          if (q) {
+            if (q.token.status === 'ok') {
+              tags.push(`<span class="badge on">✓ Token OK</span>`);
+              const u = q.usage;
+              if (u && u.available) {
+                if (u.session && u.session.remaining != null) {
+                  const pct = Math.round(u.session.remaining);
+                  const cls = pct > 50 ? 'on' : pct > 20 ? 'warn' : 'off';
+                  tags.push(`<span class="badge ${cls}">⏱ 5h: ${pct}%</span>`);
+                }
+                if (u.weekly && u.weekly.remaining != null) {
+                  const pct = Math.round(u.weekly.remaining);
+                  const cls = pct > 50 ? 'on' : pct > 20 ? 'warn' : 'off';
+                  tags.push(`<span class="badge ${cls}">📅 7d: ${pct}%</span>`);
+                }
+                if (u.limitReached) tags.push(`<span class="badge off">⚠ Limit!</span>`);
+              }
+            } else {
+              tags.push(`<span class="badge off">✕ Token lỗi ${escHtml(q.token.code || '')}</span>`);
+            }
+          }
+        }
+        heroTags.innerHTML = tags.join('');
+      } catch (_) {
+        document.getElementById('heroName').textContent = 'Lỗi tải';
+      }
+    }
+
+    // ── Build card inner HTML (compact 1-row layout) ──
+    function shortName(acc) {
+      const raw = acc.email || acc.name || acc.id.slice(0, 8);
+      const at = raw.indexOf('@');
+      return at > 0 ? raw.slice(0, at) : raw;
+    }
+
+    function pctClass(pct) {
+      return pct > 50 ? 'on' : pct > 20 ? 'warn' : 'off';
+    }
+
+    function buildCardHtml(acc, idx) {
+      const isCurrent = acc.id === currentConnectionId;
+      const displayName = shortName(acc);
+      const fullEmail = acc.email || displayName;
+      const q = quotaCache.get(acc.id);
+
+      // ── Row 1: priority · name · status · expiry ─────────────
+      const r1 = [];
+      if (isCurrent) r1.push(`<span class="m-tag live">● live</span>`);
+      else if (!acc.isActive) r1.push(`<span class="m-tag bad">disabled</span>`);
+
+      // Token status (only show if not OK — OK is implied)
+      if (q && q.token.status !== 'ok') {
+        const label = q.token.code ? `✕ ${q.token.code}` : '✕ token';
+        r1.push(`<span class="m-tag bad">${escHtml(label)}</span>`);
+      } else if (!q && acc.testStatus === 'error') {
+        r1.push(`<span class="m-tag bad">✕ err</span>`);
+      }
+
+      // Expiry / plan
+      const sub = getSubscriptionDisplay(getLiveSubscription(acc));
+      if (sub) {
+        const cls = sub.cls === 'off' ? 'bad'
+                  : sub.cls === 'warn' ? 'warn'
+                  : sub.cls === 'on' ? 'good' : 'plan';
+        r1.push(`<span class="m-tag ${cls}">${escHtml(sub.label)}</span>`);
+      }
+
+      const r1Html = r1.map(p => `<span class="dot">·</span>${p}`).join('');
+
+      // ── Row 2: quota badges ──────────────────────────────────
+      const badges = [];
+      if (q && q.token.status === 'ok') {
+        const u = q.usage;
+        if (u && u.limitReached) {
+          badges.push(`<span class="badge off">⚠ Hết quota</span>`);
+        } else if (u && u.available) {
+          if (u.session && u.session.remaining != null) {
+            const pct = Math.round(u.session.remaining);
+            const tl = u.session.resetAt ? ` · ${formatTimeLeft(u.session.resetAt)}` : '';
+            badges.push(`<span class="badge ${pctClass(pct)}" title="5h reset${escHtml(tl)}">5h ${pct}%</span>`);
+          }
+          if (u.weekly && u.weekly.remaining != null) {
+            const pct = Math.round(u.weekly.remaining);
+            const tl = u.weekly.resetAt ? ` · ${formatTimeLeft(u.weekly.resetAt)}` : '';
+            badges.push(`<span class="badge ${pctClass(pct)}" title="7d reset${escHtml(tl)}">7d ${pct}%</span>`);
+          }
+        } else {
+          badges.push(`<span class="badge on">Token OK</span>`);
+        }
+      }
+
+      if (acc.lastUsedAt) {
+        badges.push(`<span class="badge">🕐 ${escHtml(timeAgo(acc.lastUsedAt))}</span>`);
+      }
+      if (acc.backoffLevel > 0) {
+        badges.push(`<span class="badge warn">⏳ Backoff L${acc.backoffLevel}</span>`);
+      }
+      const lock = Object.entries(acc.modelLocks || {})
+        .filter(([, v]) => v !== null)
+        .map(([m, until]) => `${m}→${formatTimeLeft(until)}`)
+        .join(', ');
+      if (lock) badges.push(`<span class="badge off" title="${escHtml(lock)}">🔒 ${escHtml(lock)}</span>`);
+
+      if (acc.lastError) {
+        let msg = acc.lastError;
+        try {
+          const m = acc.lastError.match(/\{.*\}/);
+          if (m) { const j = JSON.parse(m[0]); msg = j.detail || j.message || msg; }
+        } catch (_) {}
+        const codeStr = acc.errorCode ? `[${acc.errorCode}] ` : '';
+        const full = codeStr + msg;
+        const short = full.length > 60 ? full.slice(0, 60) + '…' : full;
+        badges.push(`<span class="badge off" title="${escHtml(full)}">⚠ ${escHtml(short)}</span>`);
+      }
+
+      return `
+        <div class="acc-line">
+          <span class="priority">P${acc.priority || idx + 1}</span>
+          <span class="acc-name${isCurrent ? ' current' : ''}" title="${escHtml(fullEmail)}">${escHtml(displayName)}</span>
+          ${r1Html}
+        </div>
+        <div class="acc-badges">${badges.join('')}</div>
+        <div class="provider-actions">
+          <button class="btn-primary apply-btn" title="Apply">⚡</button>
+          <button class="btn-ghost check-btn" title="Check quota">🔍</button>
+          <button class="btn-ghost delete-btn" title="Xoá account">🗑️</button>
+        </div>`;
+    }
+
+    function attachCardListeners(card, acc, idx) {
+      card.querySelector('.apply-btn').addEventListener('click', () => applyAccount(acc));
+      card.querySelector('.check-btn').addEventListener('click', () => checkQuota(acc, card));
+      card.querySelector('.delete-btn').addEventListener('click', () => deleteAccount(acc));
+    }
+
+    function getQuotaScore(accId) {
+      const q = quotaCache.get(accId);
+      if (!q) return 2;                          // chưa check → trung tính
+      if (q.token.status !== 'ok') return 5;     // token lỗi → dưới cùng
+      const u = q.usage;
+      if (u && u.limitReached) return 4;         // hết quota
+      if (q.token.code === 429) return 4;        // hết quota (429)
+      if (!u || !u.available) return 2;          // token OK, không có usage
+      const rem = u.session && u.session.remaining != null ? u.session.remaining : null;
+      if (rem === null) return 2;
+      if (rem >= 50) return 0;                   // quota cao ≥ 50%
+      if (rem >= 20) return 1;                   // quota trung bình 20-50%
+      return 3;                                  // sắp hết < 20%
+    }
+
+    function sortedByQuota(accounts) {
+      return [...accounts].sort((a, b) => {
+        // Active account always first
+        if (a.id === currentConnectionId && b.id !== currentConnectionId) return -1;
+        if (b.id === currentConnectionId && a.id !== currentConnectionId) return 1;
+        const sa = getQuotaScore(a.id);
+        const sb = getQuotaScore(b.id);
+        if (sa !== sb) return sa - sb;
+        return (a.priority || 0) - (b.priority || 0);
+      });
+    }
+
+    function renderAccountRows(accounts) {
+      const list = document.getElementById('accountsList');
+      list.innerHTML = '';
+      sortedByQuota(accounts).forEach((acc, idx) => {
+        const isCurrent = acc.id === currentConnectionId;
+        const card = document.createElement('div');
+        card.className = 'provider-card' + (isCurrent ? ' is-current' : '');
+        card.dataset.id = acc.id;
+        card.innerHTML = buildCardHtml(acc, idx);
+        attachCardListeners(card, acc, idx);
+        list.appendChild(card);
+      });
+    }
+
+    function updateCardContent(accId) {
+      const card = document.querySelector(`.provider-card[data-id="${CSS.escape(accId)}"]`);
+      if (!card) return;
+      const idx = accountsData.findIndex(a => a.id === accId);
+      if (idx < 0) return;
+      const acc = accountsData[idx];
+      card.className = 'provider-card' + (acc.id === currentConnectionId ? ' is-current' : '');
+      card.innerHTML = buildCardHtml(acc, idx);
+      attachCardListeners(card, acc, idx);
+    }
+
+    function updateQuotaSummary() {
+      const panel = document.getElementById('quotaSummary');
+      if (!panel) return;
+      const entries = [...quotaCache.values()];
+      if (entries.length === 0) { panel.classList.add('hidden'); return; }
+
+      const total = accountsData.length;
+      let ok = 0, limited = 0, nearLimit = 0;
+      let latestMs = 0;
+
+      for (const q of entries) {
+        const ts = q.checkedAt ? (typeof q.checkedAt === 'number' ? q.checkedAt : new Date(q.checkedAt).getTime()) : 0;
+        if (ts > latestMs) latestMs = ts;
+
+        if (q.token.status !== 'ok') { limited++; continue; }
+        const u = q.usage;
+        if (u && u.limitReached) { limited++; continue; }
+        if (u && u.available && u.session && u.session.remaining != null && u.session.remaining < 20) {
+          nearLimit++;
+        }
+        ok++;
+      }
+
+      document.getElementById('qs-total').textContent = total;
+      document.getElementById('qs-ok').textContent = ok;
+      document.getElementById('qs-limit').textContent = limited;
+      document.getElementById('qs-low').textContent = nearLimit;
+      document.getElementById('qs-time').textContent = latestMs ? `🕐 ${timeAgo(latestMs).replace(/\s*trước$/, '')}` : '';
+      panel.classList.remove('hidden');
+    }
+
+    async function loadQuotaCache() {
+      try {
+        const data = await fetch(`${API}/quota-cache`).then(r => r.json());
+        if (!data || typeof data !== 'object') return;
+        let updated = false;
+        for (const [id, entry] of Object.entries(data)) {
+          if (!quotaCache.has(id) && entry && entry.token) {
+            const checkedAt = entry.checkedAt ? new Date(entry.checkedAt).getTime() : Date.now();
+            quotaCache.set(id, { token: entry.token, usage: entry.usage, subscription: entry.subscription, checkedAt });
+            if (entry.subscription) updateAccountSubscription(id, entry.subscription);
+            updated = true;
+          }
+        }
+        if (updated) {
+          renderAccountRows(accountsData);
+          updateQuotaSummary();
+          updateFooter();
+        }
+      } catch (e) {
+        // cache không sẵn, bỏ qua
+      }
+    }
+
+    function updateFooter() {
+      const checked = accountsData.filter(a => quotaCache.has(a.id)).length;
+      const footer = document.getElementById('accountsFooter');
+      if (checked === 0) {
+        footer.textContent = 'Nhấn "Test All" để xem trạng thái token thực tế.';
+      } else {
+        const latest = [...quotaCache.values()].sort((a, b) => b.checkedAt - a.checkedAt)[0];
+        footer.textContent = `Đã kiểm tra ${checked}/${accountsData.length} tài khoản · ${timeAgo(latest?.checkedAt)}`;
+      }
+    }
+
+    // ── Apply ──
+    async function applyAccount(acc) {
+      try {
+        const d = await fetch(`${API}/apply/${acc.id}`, { method: 'POST' }).then(r => r.json());
+        if (d.success) {
+          showBanner(`Applied: ${d.email}`, 'ok');
+          logActivity(`Apply → ${d.email}`);
+          await Promise.all([loadCurrent(), loadAccounts()]);
+        } else {
+          showBanner(d.error || 'Apply thất bại', 'error');
+          logActivity(`Apply lỗi: ${d.error || '?'}`);
+        }
+      } catch (e) {
+        showBanner('Lỗi: ' + e.message, 'error');
+        logActivity(`Apply lỗi: ${e.message}`);
+      }
+    }
+
+    async function deleteAccount(acc) {
+      const label = acc.email || acc.name || acc.id;
+      if (!confirm(`Xoá account này?\n\n${label}`)) return;
+
+      try {
+        const d = await apiJson(`/accounts/${encodeURIComponent(acc.id)}/delete`, { method: 'POST' });
+        removeAccountsFromState(d.deletedIds || [acc.id]);
+        refreshAccountsView();
+        await loadCurrent();
+        showBanner(`Đã xoá ${d.deletedAccount?.email || label}`, 'ok');
+        logActivity(`Đã xoá account: ${d.deletedAccount?.email || label}`);
+      } catch (e) {
+        showBanner(e.message, 'error');
+        logActivity(`Xoá account lỗi: ${e.message}`);
+      }
+    }
+
+    async function deleteInvalidAccounts() {
+      const invalidIds = getInvalidAccountIdsFromLatestChecks();
+      if (invalidIds.length === 0) {
+        showBanner('Không có account lỗi token từ kết quả test gần nhất', 'error');
+        logActivity('Không có account lỗi token để xoá');
+        return;
+      }
+
+      if (!confirm(`Xoá ${invalidIds.length} account có token lỗi theo kết quả test gần nhất?`)) return;
+
+      const btn = document.getElementById('deleteInvalidBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner" style="width:12px;height:12px;border-width:1.5px"></div>';
+      try {
+        const d = await apiJson('/accounts/delete-invalid', { method: 'POST' });
+        removeAccountsFromState(d.deletedIds || []);
+        refreshAccountsView();
+        await loadCurrent();
+        showBanner(`Đã xoá ${d.deletedCount || 0} account lỗi token`, 'ok');
+        logActivity(`Bulk xoá account lỗi token: ${d.deletedCount || 0}`);
+      } catch (e) {
+        showBanner(e.message, 'error');
+        logActivity(`Bulk xoá lỗi: ${e.message}`);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🧹 Xoá acc lỗi token';
+      }
+    }
+
+    // ── Check quota ──
+    async function checkQuota(acc, card) {
+      if (card) card.classList.add('is-checking');
+      try {
+        const d = await fetch(`${API}/check-quota/${acc.id}`, { method: 'POST' }).then(r => r.json());
+        quotaCache.set(acc.id, { token: d.token, usage: d.usage, subscription: d.subscription, checkedAt: Date.now() });
+        updateAccountSubscription(acc.id, d.subscription);
+        if (d.token.status === 'ok') {
+          let msg = `Token OK · ${d.email}`;
+          if (d.usage && d.usage.available && d.usage.session && d.usage.session.remaining != null)
+            msg += ` · 5h: ${Math.round(d.usage.session.remaining)}%`;
+          showBanner(msg, 'ok');
+          logActivity(`Check OK: ${d.email}`);
+        } else {
+          showBanner(`Lỗi [${d.token.code || '?'}] · ${d.token.detail || ''}`, 'error');
+          logActivity(`Check lỗi [${d.token.code || '?'}]: ${acc.email || acc.id.slice(0, 8)}`);
+        }
+        renderAccountRows(accountsData); updateStats(accountsData); updateFooter(); updateQuotaSummary(); loadCurrent();
+      } catch (e) {
+        showBanner('Lỗi: ' + e.message, 'error');
+        logActivity(`Check lỗi: ${e.message}`);
+      } finally {
+        if (card) card.classList.remove('is-checking');
+      }
+    }
+
+    // ── Load accounts ──
+    async function loadAccounts() {
+      const list = document.getElementById('accountsList');
+      list.innerHTML = `<div class="provider-card" style="display:flex;align-items:center;justify-content:center;padding:28px"><div class="spinner"></div></div>`;
+      try {
+        const data = await fetch(`${API}/accounts`).then(r => r.json());
+        currentAccountId      = data.currentAccountId      || currentAccountId;
+        currentConnectionId   = data.currentConnectionId   || currentConnectionId;
+        accountsData = data.accounts || [];
+        refreshAccountsView();
+        loadQuotaCache();
+      } catch (e) {
+        list.innerHTML = `<div class="provider-card"><div class="empty-state"><div class="ico">⚠️</div><div class="msg">Lỗi tải</div><div class="sub">${escHtml(e.message)}</div></div></div>`;
+        logActivity(`Lỗi tải accounts: ${e.message}`);
+      }
+    }
+
+    // ── OAuth dialog ──
+    function updateOauthControls() {
+      const hasAuthUrl  = Boolean(oauthFlow && oauthFlow.authUrl);
+      const hasCallback = Boolean(document.getElementById('oauthCallbackInput').value.trim());
+      document.getElementById('oauthCopyBtn').disabled    = !hasAuthUrl;
+      document.getElementById('oauthFinishBtn').disabled  = !oauthFlow || !hasCallback;
+      const openBtn = document.getElementById('oauthOpenBtn');
+      openBtn.href = hasAuthUrl ? oauthFlow.authUrl : '#';
+      openBtn.style.pointerEvents = hasAuthUrl ? '' : 'none';
+      openBtn.style.opacity       = hasAuthUrl ? '' : '.55';
+    }
+
+    function setOauthStatus(msg, type = 'muted') {
+      const el = document.getElementById('oauthStatus');
+      el.textContent = msg;
+      el.style.color = type === 'error' ? 'var(--danger)'
+        : type === 'ok' ? 'var(--success)'
+        : 'var(--text-secondary)';
+    }
+
+    function resetOauthModal() {
+      oauthFlow = null;
+      document.getElementById('oauthAuthUrl').value = '';
+      document.getElementById('oauthCallbackInput').value = '';
+      document.getElementById('oauthExpiry').textContent = '';
+      document.getElementById('oauthStartBtn').disabled = false;
+      document.getElementById('oauthFinishBtn').disabled = true;
+      document.getElementById('oauthFinishBtn').textContent = 'Hoàn tất thêm account';
+      setOauthStatus('codexauth sẽ tự tạo auth URL, mở link đăng nhập rồi dán callback URL về đây.');
+      updateOauthControls();
+    }
+
+    async function startOauthFlow() {
+      const btn = document.getElementById('oauthStartBtn');
+      btn.disabled = true; btn.textContent = 'Đang lấy link...';
+      document.getElementById('oauthAuthUrl').value = '';
+      document.getElementById('oauthCallbackInput').value = '';
+      document.getElementById('oauthExpiry').textContent = '';
+      oauthFlow = null; updateOauthControls();
+      setOauthStatus('Đang tạo auth URL native từ codexauth...');
+      try {
+        const d = await apiJson('/oauth/codex/start', { method: 'POST' });
+        oauthFlow = d;
+        document.getElementById('oauthAuthUrl').value = d.authUrl || '';
+        document.getElementById('oauthCallbackInput').placeholder =
+          `Dán callback URL dạng ${d.redirectUri || 'http://localhost:1455/auth/callback'}?code=...`;
+        document.getElementById('oauthExpiry').textContent = d.expiresAt
+          ? `Session hết hạn lúc ${new Date(d.expiresAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`
+          : '';
+        setOauthStatus('Mở link, đăng nhập, rồi copy callback URL localhost từ thanh địa chỉ để dán lại.');
+        updateOauthControls();
+        logActivity('OAuth flow started');
+      } catch (e) {
+        setOauthStatus(e.message, 'error');
+        showBanner(e.message, 'error');
+        logActivity(`OAuth start lỗi: ${e.message}`);
+      } finally {
+        btn.disabled = false; btn.textContent = 'Lấy link OAuth';
+      }
+    }
+
+    document.getElementById('addOauthBtn').addEventListener('click', () => {
+      resetOauthModal();
+      document.getElementById('oauth-dialog').showModal();
+      startOauthFlow();
+    });
+
+    document.getElementById('close-oauth-dialog').addEventListener('click', () =>
+      document.getElementById('oauth-dialog').close());
+    document.getElementById('oauthCancelBtn').addEventListener('click', () =>
+      document.getElementById('oauth-dialog').close());
+
+    document.getElementById('oauthCallbackInput').addEventListener('input', updateOauthControls);
+    document.getElementById('oauthStartBtn').addEventListener('click', startOauthFlow);
+
+    document.getElementById('oauthCopyBtn').addEventListener('click', async () => {
+      if (!oauthFlow || !oauthFlow.authUrl) return;
+      try {
+        await copyText(oauthFlow.authUrl);
+        showBanner('Đã copy auth URL', 'ok');
+        logActivity('Copied OAuth URL');
+      } catch (e) {
+        showBanner('Copy thất bại: ' + e.message, 'error');
+      }
+    });
+
+    document.getElementById('oauthOpenBtn').addEventListener('click', e => {
+      if (!oauthFlow || !oauthFlow.authUrl) e.preventDefault();
+    });
+
+    document.getElementById('oauthFinishBtn').addEventListener('click', async () => {
+      if (!oauthFlow || !oauthFlow.flowId) return;
+      const btn = document.getElementById('oauthFinishBtn');
+      const callbackUrl = document.getElementById('oauthCallbackInput').value.trim();
+      if (!callbackUrl) return;
+      btn.disabled = true; btn.textContent = 'Đang exchange...';
+      setOauthStatus('Đang verify callback và exchange code trực tiếp với OpenAI...');
+      try {
+        const d = await apiJson('/oauth/codex/finish', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ flowId: oauthFlow.flowId, callbackUrl }),
+        });
+        const created = d.createdAccount && (d.createdAccount.email || d.createdAccount.name);
+        document.getElementById('oauth-dialog').close();
+        showBanner(created ? `Đã thêm ${created}` : `Đã thêm OAuth account · ${d.count} account`, 'ok');
+        logActivity(`OAuth thêm account: ${created || '?'}`);
+        await Promise.all([loadCurrent(), loadAccounts()]);
+      } catch (e) {
+        setOauthStatus(e.message, 'error');
+        showBanner(e.message, 'error');
+        logActivity(`OAuth finish lỗi: ${e.message}`);
+        updateOauthControls();
+      } finally {
+        btn.textContent = 'Hoàn tất thêm account';
+      }
+    });
+
+    // ── Toolbar buttons ──
+    document.getElementById('checkAllBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('checkAllBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner" style="width:12px;height:12px;border-width:1.5px"></div>';
+      document.querySelectorAll('#accountsList .provider-card').forEach(c => c.classList.add('is-checking'));
+      logActivity('Checking all accounts...');
+      try {
+        const d = await fetch(`${API}/check-all`, { method: 'POST' }).then(r => r.json());
+        const now = Date.now();
+        let ok = 0, fail = 0;
+        (d.results || []).forEach(r => {
+          quotaCache.set(r.id, { token: r.token, usage: r.usage, subscription: r.subscription, checkedAt: now });
+          updateAccountSubscription(r.id, r.subscription);
+          if (r.token.status === 'ok') ok++; else fail++;
+        });
+        renderAccountRows(accountsData);
+        updateStats(accountsData); updateFooter(); updateQuotaSummary(); loadCurrent();
+        showBanner(`${ok} hợp lệ · ${fail} lỗi`, ok > 0 ? 'ok' : 'error');
+        logActivity(`Check all: ${ok} OK, ${fail} lỗi`);
+      } catch (e) {
+        document.querySelectorAll('#accountsList .provider-card').forEach(c => c.classList.remove('is-checking'));
+        showBanner('Lỗi: ' + e.message, 'error');
+        logActivity(`Check all lỗi: ${e.message}`);
+      }
+      btn.disabled = false;
+      btn.textContent = '⚡ Test All';
+    });
+
+    document.getElementById('exportJsonBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('exportJsonBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner" style="width:12px;height:12px;border-width:1.5px"></div>';
+      logActivity('Exporting accounts JSON...');
+      try {
+        const res = await fetch(`${API}/accounts/export`);
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          const detail = data.detail
+            ? `${data.error || 'Lỗi'}: ${data.detail}`
+            : (data.error || `HTTP ${res.status}`);
+          throw new Error(detail);
+        }
+        const blob = await res.blob();
+        const disposition = res.headers.get('content-disposition') || '';
+        const match = disposition.match(/filename="([^"]+)"/i);
+        const filename = match && match[1]
+          ? match[1]
+          : `codex-accounts-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showBanner(`Đã export ${accountsData.length} account`, 'ok');
+        logActivity(`Export JSON: ${accountsData.length} account`);
+      } catch (e) {
+        showBanner(e.message, 'error');
+        logActivity(`Export JSON lỗi: ${e.message}`);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '⭳ Export JSON';
+      }
+    });
+
+    document.getElementById('refreshAccountsBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('refreshAccountsBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner" style="width:12px;height:12px;border-width:1.5px"></div>';
+      logActivity('Reloading local accounts...');
+      try {
+        await Promise.all([loadCurrent(), loadAccounts()]);
+        showBanner(`Đã tải lại ${accountsData.length} account local`, 'ok');
+        logActivity(`Reload xong: ${accountsData.length} accounts`);
+      } catch (e) {
+        showBanner(e.message, 'error');
+        logActivity(`Reload lỗi: ${e.message}`);
+      } finally {
+        btn.disabled = false; btn.textContent = '↻ Tải lại DS';
+      }
+    });
+
+    document.getElementById('deleteInvalidBtn').addEventListener('click', deleteInvalidAccounts);
+
+    document.getElementById('refreshNavBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('refreshNavBtn');
+      btn.disabled = true;
+      logActivity('Refreshing...');
+      await Promise.all([loadCurrent(), loadAccounts()]);
+      btn.disabled = false;
+      logActivity('Refreshed');
+    });
+
+    document.getElementById('copyWindowsInstallBtn').addEventListener('click', async () => {
+      const command = document.getElementById('windowsInstallCommand').textContent.trim();
+      try {
+        await copyText(command);
+        showBanner('Đã copy lệnh cài Windows', 'ok');
+        logActivity('Copied Windows install command');
+      } catch (e) {
+        showBanner('Copy thất bại: ' + e.message, 'error');
+      }
+    });
+
+    // ── Init ──
+    logActivity('App loaded');
+    (async () => {
+      const ok = await bootstrapAuth();
+      if (ok) Promise.all([loadCurrent(), loadAccounts()]);
+    })();
+  </script>
+</body>
+</html>
