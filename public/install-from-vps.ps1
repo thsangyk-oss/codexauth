@@ -1,16 +1,11 @@
 $ErrorActionPreference = "Stop"
 
-function Join-Url($Base, $Path) {
-  return ($Base.TrimEnd("/") + "/" + $Path.TrimStart("/"))
-}
-
-$BaseUrl = if ($env:CODEXAUTH_BASE_URL) {
-  $env:CODEXAUTH_BASE_URL
+$ZipUrl = if ($env:CODEXAUTH_ZIP_URL) {
+  $env:CODEXAUTH_ZIP_URL
 } else {
-  "https://codexauth.misanet.io.vn"
+  "https://github.com/thsangyk-oss/codexauth/archive/refs/heads/main.zip"
 }
 
-$BaseUrl = $BaseUrl.TrimEnd("/")
 $InstallRoot = if ($env:CODEXAUTH_INSTALL_DIR) {
   [System.IO.Path]::GetFullPath($env:CODEXAUTH_INSTALL_DIR)
 } else {
@@ -19,9 +14,8 @@ $InstallRoot = if ($env:CODEXAUTH_INSTALL_DIR) {
 
 $AppDir = Join-Path $InstallRoot "app"
 $TempDir = Join-Path $env:TEMP ("codexauth-" + [guid]::NewGuid().ToString("N"))
-$ZipPath = Join-Path $TempDir "codexauth-windows.zip"
+$ZipPath = Join-Path $TempDir "codexauth-main.zip"
 $ExtractDir = Join-Path $TempDir "extract"
-$ZipUrl = Join-Url $BaseUrl "releases/codexauth-windows.zip"
 
 New-Item -ItemType Directory -Force -Path $TempDir, $ExtractDir, $AppDir | Out-Null
 
@@ -36,12 +30,13 @@ Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object {
 }
 Start-Sleep -Milliseconds 600
 
-Write-Host "Downloading codexauth from $ZipUrl"
+Write-Host "Downloading codexauth from GitHub: $ZipUrl"
 Invoke-WebRequest -Uri $ZipUrl -OutFile $ZipPath -UseBasicParsing
 
 Write-Host "Extracting to $AppDir"
 Expand-Archive -Path $ZipPath -DestinationPath $ExtractDir -Force
-Copy-Item -Path (Join-Path $ExtractDir "*") -Destination $AppDir -Recurse -Force
+$SourceDir = Join-Path $ExtractDir "codexauth-main"
+Copy-Item -Path (Join-Path $SourceDir "*") -Destination $AppDir -Recurse -Force
 
 Remove-Item -Path $TempDir -Recurse -Force
 

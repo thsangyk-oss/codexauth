@@ -27,12 +27,6 @@ One-line install directly from GitHub:
 irm https://raw.githubusercontent.com/thsangyk-oss/codexauth/main/public/install-from-vps.ps1 | iex
 ```
 
-Fallback install from the VPS mirror:
-
-```powershell
-irm https://codexauth.misanet.io.vn/install-from-vps.ps1 | iex
-```
-
 The installer creates a `codexauth` desktop shortcut. Opening the shortcut starts the local server if needed, then opens the dashboard in your browser.
 
 Open:
